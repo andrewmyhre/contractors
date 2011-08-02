@@ -1,0 +1,13 @@
+﻿@model Contractors.Web.Models.CandidateListViewModel
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var candidate in Model.Candidates)
+{
+    <p>@Html.ActionLink(candidate.FullName, "Details", new {id=candidate.Id})</p>
+}
+
