@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Contractors.Core.Domain
 {
@@ -18,5 +19,15 @@ namespace Contractors.Core.Domain
         public List<Placement> WorkHistory { get; set; }
         public string JobTitle { get; set; }
         public int ContractLengthInMonths { get; set; }
+
+        public DateTime AvailableDate
+        {
+            get
+            {
+                return WorkHistory
+                    .Max(h => h.Started)
+                    .AddMonths(ContractLengthInMonths);
+            }
+        }
     }
 }

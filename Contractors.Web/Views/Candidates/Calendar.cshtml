@@ -1,0 +1,63 @@
+﻿@model Contractors.Web.Models.CandidateListViewModel
+@using Contractors.Web.Code
+
+@{
+    ViewBag.Title = "Calendar";
+    var date = new DateTime(Model.CalendarMonthStartDate.Year, Model.CalendarMonthStartDate.Month, 1);
+}
+
+<h2>Calendar - @date.ToString("MMMM yyyy")</h2>
+
+<div>
+<p>@Html.ActionLink(string.Format("{0} ({1})", date.AddMonths(-1).ToString("MMMM yyyy"), Model.CandidatesLastMonth), "Calendar", new { month = date.AddMonths(-1).Month, year = date.AddMonths(-1).Year })
+
+@Html.ActionLink(string.Format("{0} ({1})", date.AddMonths(1).ToString("MMMM yyyy"), Model.CandidatesNextMonth), "Calendar", new {month=date.AddMonths(1).Month, year=date.AddMonths(1).Year})</p>
+
+    <div class="month-header">
+        <table>
+            <tbody>
+                <tr>
+                    <td>Monday</td>
+                    <td>Tuesday</td>
+                    <td>Wednesday</td>
+                    <td>Thursday</td>
+                    <td>Friday</td>
+                    <td>Saturday</td>
+                    <td>Sunday</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="month-row">
+        <table>
+            <tbody>
+                <tr>
+                    
+@{
+    int week=0;
+}
+    @for (DateTime day = Model.CalendarActualStartDate; day <= Model.CalendarActualEndDate; day=day.AddDays(1))
+    {
+        <td class="day @if (day.Month != Model.CalendarMonthStartDate.Month){<text>inactive</text>}">@day.Day<br />
+            @{var candidates = Model.CandidatesByDay[day.ToString("dd-MM-yyyy")];}
+            @if (candidates != null)
+            {
+                <ul>
+                @foreach (var c in candidates)
+                {
+                    <li>@c.FullName</li>
+                }
+                </ul>
+            }
+        </td>
+        
+        @Html.EndWeekRow(day)
+    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="clear" />
+

@@ -88,3 +88,67 @@ margin-right:20px;
 {
 float:left;
 }
+
+#calendar {
+	margin: 0;
+	padding: 0;
+	width: 700px;
+	border: 2px solid #333;
+	background-color: #ddd; 
+}
+
+.clear { 
+	clear: both; }
+
+
+.month-row table tbody tr td.day {
+
+	list-style-position: inside;
+	font-weight: bold;
+	height: 88px;
+	border: 1px solid #999;
+	background-color: #fff; 
+	padding: 5px;
+	overflow: hidden; 
+    width:14.28%;
+    vertical-align:top;}
+
+#calendar li.Sunday {
+	margin-left: 0; }
+#calendar li.Monday {
+	margin-left: 100px; }
+#calendar li.Tuesday {
+	margin-left: 200px; }
+#calendar li.Wednesday {
+	margin-left: 300px; }
+#calendar li.Thursday {
+	margin-left: 400px; }
+#calendar li.Friday {
+	margin-left: 500px; }
+#calendar li.Saturday {
+	margin-left: 600px; }
+
+.day ul {
+	margin: 0;
+	padding: 0;
+	clear: both; }
+.day ul li {
+	list-style: none;
+	font-weight: normal;
+	float: none;
+	border: none;
+	padding: 5px 0;
+	margin: 0; }
+
+td.inactive
+{
+    background-color:#ddd !important;
+}
+div.month-header table, div.month-row table
+{
+width:100%;
+}
+div.month-header table tbody tr td
+{
+width:14.28%;
+}
