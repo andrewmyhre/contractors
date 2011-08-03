@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Contractors.Core.Domain;
 
 namespace Contractors.Core
 {
@@ -61,6 +62,15 @@ namespace Contractors.Core
         public void Commit()
         {
             // nothing to do
+        }
+
+        public void Delete<T>(T entity)
+        {
+            var repo = _listDbContext.Queryables[typeof(T)];
+            if (repo == null)
+                throw new ArgumentException("No table found for " + typeof (T).Name);
+
+            repo.Remove(entity);
         }
     }
 }

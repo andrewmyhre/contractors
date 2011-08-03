@@ -73,3 +73,18 @@ textarea
 {
     display: none;
 }
+
+.candidate-list-item
+{
+float:left;
+width:100%;
+}
+.candidate-list-item img
+{
+float:left;
+margin-right:20px;
+}
+.candidate-list-item .candidate-overview
+{
+float:left;
+}

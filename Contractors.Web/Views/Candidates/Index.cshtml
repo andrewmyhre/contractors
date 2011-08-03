@@ -4,10 +4,10 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Candidates</h2>
 
 @foreach (var candidate in Model.Candidates)
 {
-    <p>@Html.ActionLink(candidate.FullName, "Details", new {id=candidate.Id})</p>
+    Html.RenderPartial("CandidateListItem", candidate);
 }
 

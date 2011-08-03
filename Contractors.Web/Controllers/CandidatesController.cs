@@ -21,13 +21,17 @@ namespace Contractors.Web.Controllers
         //
         // GET: /CandidateDetail/
 
-        public ActionResult Index()
+        public ActionResult Index(int? page)
         {
             var viewModel = new CandidateListViewModel();
 
+            int startIndex = (page ?? 0)*20;
+            
             using (var session = _dbContext.OpenSession())
             {
-                viewModel.Candidates = session.Query<Candidate>();
+                viewModel.Candidates = session.Query<Candidate>()
+                    .Skip(startIndex)
+                    .Take(20);
             }
             return View(viewModel);
         }
