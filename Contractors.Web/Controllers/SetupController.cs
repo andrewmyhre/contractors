@@ -122,7 +122,7 @@ namespace Contractors.Web.Controllers
 
         private List<Placement> RandomWorkHistory()
         {
-            DateTime started = DateTime.Now.AddMonths(-1 * random.Next(12, 80));
+            DateTime started = DateTime.Now.AddMonths(-1 * random.Next(12, 80)).AddDays(random.Next(30));
             List<Placement> history = new List<Placement>();
 
             RemunerationPeriod payType = (RemunerationPeriod)random.Next(Enum.GetValues(typeof(RemunerationPeriod)).Length - 1);
@@ -146,7 +146,7 @@ namespace Contractors.Web.Controllers
             while (started <= DateTime.Now)
             {
                 int durationInMonths = random.Next(3, 48);
-                DateTime finished = started.AddMonths(durationInMonths);
+                DateTime finished = started.AddMonths(durationInMonths).AddDays(random.Next(30));
                 history.Add(new Placement()
                                 {
                                     Started = started,
