@@ -3,61 +3,55 @@
 
 @{
     ViewBag.Title = "Calendar";
-    var date = new DateTime(Model.CalendarMonthStartDate.Year, Model.CalendarMonthStartDate.Month, 1);
+    var date = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
 }
 
 <h2>Calendar - @date.ToString("MMMM yyyy")</h2>
 
-<div>
-<p>@Html.ActionLink(string.Format("{0} ({1})", date.AddMonths(-1).ToString("MMMM yyyy"), Model.CandidatesLastMonth), "Calendar", new { month = date.AddMonths(-1).Month, year = date.AddMonths(-1).Year })
+<script type="text/javascript">
+    var date = new Date();
 
-@Html.ActionLink(string.Format("{0} ({1})", date.AddMonths(1).ToString("MMMM yyyy"), Model.CandidatesNextMonth), "Calendar", new {month=date.AddMonths(1).Month, year=date.AddMonths(1).Year})</p>
+    $(document).ready(function () {
+        $('#prev').click(function () {
+            date = addMonths(date, -1);
+            $('#cal').load('/candidates/cal?month=' + (date.getMonth()+1) + '&year=' + date.getFullYear());
+            return false;
+        });
+        $('#next').click(function () {
+            date = addMonths(date, 1);
+            $('#cal').load('/candidates/cal?month=' + (date.getMonth() + 1) + '&year=' + date.getFullYear());
+            return false;
+        });
 
-    <div class="month-header">
-        <table>
-            <tbody>
-                <tr>
-                    <td>Monday</td>
-                    <td>Tuesday</td>
-                    <td>Wednesday</td>
-                    <td>Thursday</td>
-                    <td>Friday</td>
-                    <td>Saturday</td>
-                    <td>Sunday</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-    <div class="month-row">
-        <table>
-            <tbody>
-                <tr>
-                    
-@{
-    int week=0;
-}
-    @for (DateTime day = Model.CalendarActualStartDate; day <= Model.CalendarActualEndDate; day=day.AddDays(1))
-    {
-        <td class="day @if (day.Month != Model.CalendarMonthStartDate.Month){<text>inactive</text>}">@day.Day<br />
-            @{var candidates = Model.CandidatesByDay[day.ToString("dd-MM-yyyy")];}
-            @if (candidates != null)
-            {
-                <ul>
-                @foreach (var c in candidates)
-                {
-                    <li>@c.FullName</li>
-                }
-                </ul>
+        $('#cal').load('/candidates/cal');
+    });
+
+    function addMonths(date, monthsToAdd) {
+        var month = date.getMonth();
+        var year = date.getFullYear();
+
+        if (monthsToAdd > 0) {
+            while (monthsToAdd > 12) {
+                year++;
+                monthsToAdd -= 12;
             }
-        </td>
-        
-        @Html.EndWeekRow(day)
+        } else if (monthsToAdd < 0) {
+            while (monthsToAdd < -12) {
+                year--;
+                monthsToAdd += 12;
+            }
+        }
+
+        month += monthsToAdd;
+
+        return new Date(year, month, date.getDay(), 0, 0, 0, 0);
     }
-                </tr>
-            </tbody>
-        </table>
-    </div>
+
+
+</script>
+
+<div>
+<p><a href="" id="prev">prev</a> <a href="" id="next">next</a>
 </div>
 
-<div class="clear" />
-
+<div id="cal"></div>

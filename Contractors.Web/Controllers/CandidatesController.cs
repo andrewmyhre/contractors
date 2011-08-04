@@ -76,6 +76,46 @@ namespace Contractors.Web.Controllers
             return View(viewModel);
         }
 
+        [ActionName("cal")]
+        public ActionResult CalendarView(int? month, int? year)
+        {
+            var viewModel = new CandidateListViewModel();
+
+
+            viewModel.CalendarActualStartDate = viewModel.CalendarMonthStartDate = new DateTime(year ?? DateTime.Now.Year, month ?? DateTime.Now.Month, 1);
+            while (viewModel.CalendarActualStartDate.DayOfWeek != DayOfWeek.Monday)
+                viewModel.CalendarActualStartDate = viewModel.CalendarActualStartDate.AddDays(-1);
+
+            viewModel.CalendarActualEndDate = viewModel.CalendarMonthEndDate = viewModel.CalendarMonthStartDate.AddMonths(1);
+            while (viewModel.CalendarActualEndDate.DayOfWeek != DayOfWeek.Sunday)
+                viewModel.CalendarActualEndDate = viewModel.CalendarActualEndDate.AddDays(1);
+
+            IEnumerable<Candidate> candidates = null;
+            using (var session = _dbContext.OpenSession())
+            {
+                candidates = session.Query<Candidate>();
+            }
+
+            viewModel.CandidatesByDay = new Dictionary<string, IEnumerable<Candidate>>();
+
+            for (DateTime day = viewModel.CalendarActualStartDate; day <= viewModel.CalendarActualEndDate; day = day.AddDays(1))
+            {
+                DateTime day1 = day;
+                var candidatesThisDay = candidates.Where(c => c.AvailableDate >= day1 && c.AvailableDate < day1.AddDays(1));
+                viewModel.CandidatesByDay.Add(day.ToString("dd-MM-yyyy"),
+                    candidatesThisDay);
+            }
+
+            viewModel.CandidatesNextMonth =
+                candidates.Where(c => c.AvailableDate >= viewModel.CalendarMonthStartDate.AddMonths(1)
+                                                && c.AvailableDate < viewModel.CalendarMonthStartDate.AddMonths(2)).Count();
+            viewModel.CandidatesLastMonth =
+                candidates.Where(c => c.AvailableDate >= viewModel.CalendarMonthStartDate.AddMonths(-1)
+                                                && c.AvailableDate < viewModel.CalendarMonthStartDate).Count();
+
+            return View("~/views/candidates/CalendarView.cshtml", viewModel);
+        }
+
         //
         // GET: /CandidateDetail/Details/5
 
