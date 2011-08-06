@@ -4,4 +4,4 @@ obj/
 _ReSharper*
 *.user
 App_Data/RavenDb/
-*/RavenDB*/server/Data/
+*/RavenDB*/server/*

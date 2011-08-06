@@ -6,8 +6,11 @@
 
 <h2>Candidates</h2>
 
-@foreach (var candidate in Model.Candidates)
-{
-    Html.RenderPartial("CandidateListItem", candidate);
-}
+<script type="text/javascript" src="/scripts/date.format.js"></script>
+<script type="text/javascript" src="/scripts/calendar.js"></script>
 
+<div>
+<p><a href="" id="prev">prev</a> <a href="" id="next">next</a>
+</div>
+
+<div id="cal"></div>

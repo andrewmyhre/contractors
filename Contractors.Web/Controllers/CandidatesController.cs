@@ -116,6 +116,19 @@ namespace Contractors.Web.Controllers
             return View("~/views/candidates/CalendarView.cshtml", viewModel);
         }
 
+        public int CandidateCount(int month, int year)
+        {
+            int count = 0;
+            using (var session = _dbContext.OpenSession())
+            {
+                count =
+                    session.Query<Candidate>().Where(c => c.AvailableDate.Month == month && c.AvailableDate.Year == year)
+                        .Count();
+            }
+
+            return count;
+        }
+
         //
         // GET: /CandidateDetail/Details/5
 
