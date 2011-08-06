@@ -15,5 +15,8 @@
         { 
             <text>(+ @(Model.Candidate.Skills.Count-3) others)</text>
         }</p>
+        <p>@Html.ActionLink("Open " + @Model.Candidate.FullName + "'s Profile", "Details", new {id=Model.Candidate.Id.Split('/')[1]})
+        @Html.ActionLink("(new window)", "Details", new { id = Model.Candidate.Id.Split('/')[1] }, new { target = "_blank" })</p>
     </div>
+    
 </div>
