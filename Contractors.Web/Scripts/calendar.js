@@ -15,8 +15,6 @@ $(document).ready(function () {
         return false;
     });
 
-    $('#preview').html('this is the dialog window').dialog({ title: 'dialog title' });
-
     dialog = $('<div></div>').dialog({ autoOpen: false, width: 700, resizable:false });
 
     showMonth();
