@@ -1,4 +1,5 @@
 using Contractors.Core;
+using Raven.Client;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Contractors.Web.App_Start.NinjectMVC3), "Start")]
 [assembly: WebActivator.ApplicationShutdownMethodAttribute(typeof(Contractors.Web.App_Start.NinjectMVC3), "Stop")]
@@ -49,8 +50,7 @@ namespace Contractors.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
-            kernel.Bind<IDbContext>().To<ListDbContext>().InSingletonScope();
-            kernel.Bind<IDbSession>().To<ListDbSession>();
+            kernel.Bind<IDbContext>().ToMethod(x=>new RavenDbContext(MvcApplication.RavenDocumentStore)).InSingletonScope();
         }        
     }
 }

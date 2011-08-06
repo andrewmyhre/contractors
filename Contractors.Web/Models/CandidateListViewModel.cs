@@ -7,7 +7,7 @@ namespace Contractors.Web.Models
 {
     public class CandidateListViewModel
     {
-        public IQueryable<Candidate> Candidates { get; set; }
+        public IEnumerable<Candidate> Candidates { get; set; }
 
         public DateTime CalendarMonthStartDate { get; set; }
 

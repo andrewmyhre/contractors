@@ -47,7 +47,6 @@ namespace Contractors.Web.Controllers
         }
 
         private static Random random = new Random();
-        private static string DefaultPhoto = "http://localhost:50774/content/img/nerd.jpg";
 
         private Candidate CreateValidRandomCandidate()
         {

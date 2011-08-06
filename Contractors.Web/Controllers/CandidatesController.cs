@@ -29,7 +29,7 @@ namespace Contractors.Web.Controllers
             
             using (var session = _dbContext.OpenSession())
             {
-                viewModel.Candidates = session.Query<Candidate>()
+                viewModel.Candidates = session.Query<Candidate>().ToList()
                     .Skip(startIndex)
                     .Take(20);
             }
@@ -53,7 +53,7 @@ namespace Contractors.Web.Controllers
             IEnumerable<Candidate> candidates = null;
             using (var session = _dbContext.OpenSession())
             {
-                candidates = session.Query<Candidate>();
+                candidates = session.Query<Candidate>().ToList();
             }
 
             viewModel.CandidatesByDay = new Dictionary<string, IEnumerable<Candidate>>();
@@ -93,7 +93,7 @@ namespace Contractors.Web.Controllers
             IEnumerable<Candidate> candidates = null;
             using (var session = _dbContext.OpenSession())
             {
-                candidates = session.Query<Candidate>();
+                candidates = session.Query<Candidate>().ToList();
             }
 
             viewModel.CandidatesByDay = new Dictionary<string, IEnumerable<Candidate>>();
