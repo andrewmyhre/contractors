@@ -132,15 +132,15 @@ namespace Contractors.Web.Controllers
         //
         // GET: /CandidateDetail/Details/5
 
-        public ActionResult Details(int id)
+        public ActionResult Details(string id, string view = "Details")
         {
             var viewModel = new CandidateDetailsViewModel();
             using (var session = _dbContext.OpenSession())
             {
-                viewModel.Candidate = session.Query<Candidate>().Where(c => c.Id.Equals(id)).FirstOrDefault();
-
+                viewModel.Candidate = session.Query<Candidate>().Where(c => c.Id == string.Format("candidates/{0}", id)).FirstOrDefault();
             }
-            return View(viewModel);
+
+            return View(view, viewModel);
         }
 
         //

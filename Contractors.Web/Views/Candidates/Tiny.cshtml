@@ -1,0 +1,13 @@
+﻿@model Contractors.Web.Models.CandidateDetailsViewModel
+
+<div class="candidate-list-item">
+    <img src="http://www.gravatar.com/avatar/@Model.Candidate.EmailMd5Hash?r=g&s=100&d=http://@Request.Url.Authority/content/img/nerd.jpg" class="avatar" />
+
+    <div class="candidate-overview">
+        <div>@Model.Candidate.FullName (@Model.Candidate.EmailAddress)</div>
+        <div>@Model.Candidate.JobTitle at @Model.Candidate.WorkHistory[Model.Candidate.WorkHistory.Count - 1].CompanyName</div>
+        <p>Available: @Model.Candidate.WorkHistory[Model.Candidate.WorkHistory.Count - 1].Started.AddMonths(Model.Candidate.ContractLengthInMonths).ToString("dd MMM, yyyy")</p>
+        <p>Rate: @Model.Candidate.DesiredRate.ToString("c")</p>
+        <p>Experience: @((DateTime.Now.Subtract(Model.Candidate.WorkHistory[0].Started).TotalDays / 365).ToString("#")) years</p>
+    </div>
+</div>

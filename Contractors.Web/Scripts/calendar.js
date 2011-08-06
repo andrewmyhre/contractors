@@ -18,7 +18,18 @@ $(document).ready(function () {
 });
 
 function showMonth() {
-    $('#cal').load('/candidates/cal');
+    $('#cal').load('/candidates/cal',
+        function () {
+            $('.candidate-name').mouseenter(function (event) {
+                var url = '/candidates/Details/' + $(event.target).attr('id') + '?view=tiny';
+                $("#preview").html('<em>loading...</em>');
+                $('#preview').load(url);
+                var pos = $(event.target).offset();
+                var width = $(event.target).width();
+                $("#preview").css({ "left": (pos.left + width) + "px", "top": pos.top + "px" });
+                $('#preview').show();
+            });
+        });
 
     var prevMonth = addMonths(date, -1);
     var nextMonth = addMonths(date, 1);

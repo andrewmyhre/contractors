@@ -5,6 +5,8 @@
     var date = new DateTime(Model.CalendarMonthStartDate.Year, Model.CalendarMonthStartDate.Month, 1);
 }
 
+<div id="preview" style="display:none;"></div>
+
     <div class="month-header">
         <table>
             <tbody>
@@ -37,7 +39,7 @@
                 <ul>
                 @foreach (var c in candidates)
                 {
-                    <li>@c.FullName</li>
+                    <li>@Html.ActionLink(c.FullName, "Details", new { id = c.Id.Split('/')[1], view = "tiny" }, new { id=c.Id.Split('/')[1], @class = "candidate-name" })</li>
                 }
                 </ul>
             }
