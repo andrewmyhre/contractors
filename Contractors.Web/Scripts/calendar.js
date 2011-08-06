@@ -15,10 +15,28 @@ $(document).ready(function () {
         return false;
     });
 
-    dialog = $('<div></div>').dialog({ autoOpen: false, width: 700, resizable:false });
+    parseDateFromQueryString(window.location.hash);
+
+    dialog = $('<div></div>').dialog({ autoOpen: false, width: 700, resizable: false });
 
     showMonth();
 });
+function parseDateFromQueryString(queryString) {
+    if (queryString[0] == '?' || queryString[0] == '#')
+        queryString = queryString.substring(1);
+    var vars = queryString.split('&');
+    var month = date.getMonth();
+    var year = date.getFullYear();
+    for (var i = 0; i < vars.length; i++) {
+        var pair = vars[i].split('=');
+        if (pair[0] == 'month')
+            month = parseInt(pair[1])-1;
+        else if (pair[0] == 'year')
+            year = parseInt(pair[1]);
+    }
+
+    date = new Date(year, month, 1);
+}
 
 function showMonth() {
     $('#cal').load('/candidates/cal',
@@ -46,6 +64,8 @@ function showMonth() {
         function (response) {
             $('#next').html(nextMonth.format('mmmm') + ' (' + response + ')');
         });
+
+        window.location.hash = 'month=' + (date.getMonth()+1) + '&year=' + (date.getFullYear());
 }
 
 function addMonths(date, monthsToAdd) {
