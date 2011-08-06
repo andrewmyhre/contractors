@@ -139,6 +139,7 @@
     </Compile>
     <Compile Include="Models\CandidateDetailsViewModel.cs" />
     <Compile Include="Models\CandidateListViewModel.cs" />
+    <Compile Include="Models\RemunerationPeriodExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

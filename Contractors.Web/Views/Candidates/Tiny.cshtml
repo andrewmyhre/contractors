@@ -1,4 +1,5 @@
 ﻿@model Contractors.Web.Models.CandidateDetailsViewModel
+@using Contractors.Web.Models
 
 <div class="candidate-list-item">
     <img src="http://www.gravatar.com/avatar/@Model.Candidate.EmailMd5Hash?r=g&s=100&d=http://@Request.Url.Authority/content/img/nerd.jpg" class="avatar" />
@@ -7,7 +8,12 @@
         <div>@Model.Candidate.FullName (@Model.Candidate.EmailAddress)</div>
         <div>@Model.Candidate.JobTitle at @Model.Candidate.WorkHistory[Model.Candidate.WorkHistory.Count - 1].CompanyName</div>
         <p>Available: @Model.Candidate.WorkHistory[Model.Candidate.WorkHistory.Count - 1].Started.AddMonths(Model.Candidate.ContractLengthInMonths).ToString("dd MMM, yyyy")</p>
-        <p>Rate: @Model.Candidate.DesiredRate.ToString("c")</p>
-        <p>Experience: @((DateTime.Now.Subtract(Model.Candidate.WorkHistory[0].Started).TotalDays / 365).ToString("#")) years</p>
+        <p>Rate: @Model.Candidate.DesiredRate.ToString("c") @Model.Candidate.DesiredRatePeriod.ToPeriodString()</p>
+        <p>@((DateTime.Now.Subtract(Model.Candidate.WorkHistory[0].Started).TotalDays / 365).ToString("#")) years experience in @string.Join(", ", Model.Candidate.WorkHistory.Select(p => p.Sector).Distinct().ToArray())</p>
+        <p>@string.Join(", ", Model.Candidate.Skills.OrderByDescending(s=>s.Level).Select(s=>s.SkillName).Take(3).ToArray())
+        @if (Model.Candidate.Skills.Count() > 3)
+        { 
+            <text>(+ @(Model.Candidate.Skills.Count-3) others)</text>
+        }</p>
     </div>
 </div>

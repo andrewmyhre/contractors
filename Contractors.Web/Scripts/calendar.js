@@ -1,4 +1,5 @@
 ﻿var date = new Date();
+var dialog = null;
 
 $(document).ready(function () {
     $('#prev').click(function () {
@@ -14,6 +15,10 @@ $(document).ready(function () {
         return false;
     });
 
+    $('#preview').html('this is the dialog window').dialog({ title: 'dialog title' });
+
+    dialog = $('<div></div>').dialog({ autoOpen: false, width: 700, resizable:false });
+
     showMonth();
 });
 
@@ -22,12 +27,12 @@ function showMonth() {
         function () {
             $('.candidate-name').mouseenter(function (event) {
                 var url = '/candidates/Details/' + $(event.target).attr('id') + '?view=tiny';
-                $("#preview").html('<em>loading...</em>');
-                $('#preview').load(url);
                 var pos = $(event.target).offset();
                 var width = $(event.target).width();
-                $("#preview").css({ "left": (pos.left + width) + "px", "top": pos.top + "px" });
-                $('#preview').show();
+
+                dialog.dialog({ title:$(event.target).html(),  position: [pos.left + width, pos.top]});
+                dialog.load(url);
+                dialog.dialog('open');
             });
         });
 

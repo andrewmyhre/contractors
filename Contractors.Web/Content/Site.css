@@ -76,8 +76,6 @@ textarea
 
 .candidate-list-item
 {
-float:left;
-width:100%;
 }
 .candidate-list-item img
 {
@@ -153,6 +151,7 @@ div.month-header table tbody tr td
 width:14.28%;
 }
 
+/*
 #preview
 {
 padding:6px;
@@ -161,4 +160,4 @@ z-index:100;
 position:absolute;
 float:left;
 background-color:#FFFFFF;
-}
+}*/
