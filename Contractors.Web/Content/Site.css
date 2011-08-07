@@ -161,3 +161,25 @@ position:absolute;
 float:left;
 background-color:#FFFFFF;
 }*/
+#months li
+{
+    display:inline;
+    width:10%;
+    list-style:none;
+    margin:0;
+    padding-left:0;
+}
+#months li a
+{
+padding:1em;
+}
+#months li a:hover
+{
+background-color:#aaaaFF;
+}
+#months li a.selected
+{
+background-color:#CCCCFF;
+}
+
+#months { margin:0; padding:0;}
