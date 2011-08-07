@@ -29,5 +29,19 @@ namespace Contractors.Core.Domain
                     .AddMonths(ContractLengthInMonths);
             }
         }
+
+        public Placement MostRecentRole
+        {
+            get { return WorkHistory.OrderByDescending(p => p.Started).FirstOrDefault(); }
+        }
+        public double TotalExperienceInYears
+        {
+            get
+            {
+                return (MostRecentRole.StillThere ? DateTime.Now : MostRecentRole.Finished)
+                           .Subtract(WorkHistory.Min(p=>p.Started))
+                           .TotalDays/365;
+            }
+        }
     }
 }

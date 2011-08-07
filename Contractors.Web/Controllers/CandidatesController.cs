@@ -129,6 +129,24 @@ namespace Contractors.Web.Controllers
             return count;
         }
 
+        public ActionResult CandidateCountForYear(int year)
+        {
+            int[] months = new int[12];
+            
+            using (var session = _dbContext.OpenSession())
+            {
+                var candidates = session.Query<Candidate>().ToList();
+                for (int month = 0; month < 12;month++ )
+                {
+                    months[month] = (from c in candidates
+                                     where c.AvailableDate.Year == year
+                                           && c.AvailableDate.Month == (month + 1)
+                                     select c).Count();
+                }
+                return Json(months, JsonRequestBehavior.AllowGet);
+            }
+        }
+
         //
         // GET: /CandidateDetail/Details/5
 
