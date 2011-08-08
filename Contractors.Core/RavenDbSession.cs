@@ -12,6 +12,8 @@ namespace Contractors.Core
             _dbSession = dbSession;
         }
 
+        public IDocumentSession Session { get { return _dbSession; } }
+
         public void Dispose()
         {
             _dbSession.Dispose();
