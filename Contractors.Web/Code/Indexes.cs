@@ -24,8 +24,8 @@ from skill in Hierarchy(c, ""Skills"")
 select new {skill.SkillName, c.FullName}",
                             Analyzers =
                                 {
-                                    {"FullName", typeof(SimpleAnalyzer).FullName},
-                                    {"SkillName", typeof(SimpleAnalyzer).FullName}
+                                    {"FullName", typeof(StopAnalyzer).FullName},
+                                    {"SkillName", typeof(StopAnalyzer).FullName}
                                 }
                         });
             }
