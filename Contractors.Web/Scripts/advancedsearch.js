@@ -16,7 +16,7 @@
         }
 
 
-        $.get('/indextest/advancedsearch',
+        $.get('/indextest/search',
             "q=" + searchString,
             function (response) {
                 $('#results').html("<p>" + response.length + " results</p>");

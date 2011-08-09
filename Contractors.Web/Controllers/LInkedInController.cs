@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Xml.Linq;
 using Microsoft.Practices.ServiceLocation;
 using OAuth.Net.Common;
 using OAuth.Net.Components;
@@ -12,59 +14,91 @@ namespace Contractors.Web.Controllers
 {
     public class LinkedInController : Controller
     {
+        private static readonly OAuthService OAuthService = OAuthService.Create(
+            new EndPoint("https://api.linkedin.com/uas/oauth/requestToken"),
+            new Uri("https://www.linkedin.com/uas/oauth/authorize"),
+            new EndPoint("https://api.linkedin.com/uas/oauth/accessToken"),
+            false,
+            string.Empty,
+            "HMAC-SHA1",
+            "1.0",
+            new OAuthConsumer("fl2b61wm2dzu", "EXmsOgjuA1SKJjSm"));
+
         //
         // GET: /LInkedIn/
-        static string linkedin_basepath = "https://api.linkedin.com";
-        static Uri linkedin_requestToken = new Uri(linkedin_basepath + "/uas/oauth/requestToken");
-        static Uri linkedin_accessToken = new Uri(linkedin_basepath + "/uas/oauth/accessToken");
-        static Uri linkedin_RequestAuthorizationPath = new Uri("https://www.linkedin.com/uas/oauth/authorize");
-        static EndPoint epRequest = new EndPoint(linkedin_requestToken);
-        static EndPoint epAccess = new EndPoint(linkedin_accessToken);
-        private OAuthConsumer consumer = null;
-        OAuthService serviceDefinition;
         private IToken requestToken = null;
-
-        public LinkedInController()
-        {
-            consumer = new OAuthConsumer("fl2b61wm2dzu", "EXmsOgjuA1SKJjSm");
-
-
-            serviceDefinition = OAuthService.Create(epRequest, linkedin_RequestAuthorizationPath, epAccess, "HMAC-SHA1", consumer);
-        }
 
         public string Index()
         {
-
-            var con = OAuthConsumerRequest.Create(epRequest, serviceDefinition);
-            con.OnReceiveRequestToken += new EventHandler<RequestTokenReceivedEventArgs>(con_OnReceiveRequestToken);
-
-            var auth_request = OAuthRequest.Create(new EndPoint("http://api.linkedin.com/v1/people/~"),
-                                                   serviceDefinition,new Uri("http://localhost:50774/linkedin/callback"), "1");
-
-            auth_request.OnReceiveRequestToken += new EventHandler<RequestTokenReceivedEventArgs>(auth_request_OnReceiveRequestToken);
-            auth_request.OnReceiveAccessToken += new EventHandler<AccessTokenReceivedEventArgs>(auth_request_OnReceiveAccessToken);
-            auth_request.OnBeforeGetRequestToken += new EventHandler<PreRequestEventArgs>(auth_request_OnBeforeGetRequestToken);
-            auth_request.OnBeforeGetAccessToken += new EventHandler<PreAccessTokenRequestEventArgs>(auth_request_OnBeforeGetAccessToken);
-            auth_request.OnBeforeGetProtectedResource += new EventHandler<PreProtectedResourceRequestEventArgs>(auth_request_OnBeforeGetProtectedResource);
-
-            var response = auth_request.GetResource();
-
+            var request = OAuthRequest.Create(
+                new EndPoint("http://api.linkedin.com/v1/people/~/positions", "GET"),
+                OAuthService,
+                new Uri("http://localhost:50774/linkedin"),
+                Session.SessionID);
+            
+            request.VerificationHandler = AspNetOAuthRequest.HandleVerification;
+            OAuthResponse response = request.GetResource();
             if (!response.HasProtectedResource)
             {
-                Response.Redirect(linkedin_RequestAuthorizationPath.ToString()+"?oauth_token="+response.Token.Token);
+                Response.Redirect(OAuthService.BuildAuthorizationUrl(response.Token).AbsoluteUri, true);
+            }
+            else
+            {
+
+                Session["access_token"] = response.Token;
+
+                IEnumerable<Position> workHistory = GetWorkHistoryFromResponseStream(response.ProtectedResource.GetResponseStream());
+
+
+                return "done";
             }
 
-            return "ok";
+            return "failed";
         }
 
-        public string Callback(string oauth_token, string oauth_verifier)
+        private IEnumerable<Position> GetWorkHistoryFromResponseStream(Stream stream)
         {
-            var auth_request = OAuthRequest.Create(new EndPoint("http://api.linkedin.com/v1/people/~"),
-                                                   serviceDefinition, "1");
+            XDocument xml = XDocument.Load(stream);
 
-            var response = auth_request.GetResource();
+            return (from e in xml.Element("positions").Elements("position")
+                    select new Position()
+                               {
+                                   Id = e.Element("id").Value,
+                                   Title = e.Element("title").Value,
+                                   StartDate = new DateTime(
+                                       int.Parse(e.Element("start-date").Element("year").Value), 
+                                       e.Element("start-date").Element("month") != null 
+                                           ? int.Parse(e.Element("start-date").Element("month").Value) 
+                                           : 1, 1),
+                                   IsCurrent = bool.Parse(e.Element("is-current").Value),
+                                   EndDate = e.Element("end-date") != null ?
+                                                                               new DateTime?(new DateTime(
+                                                                                                 int.Parse(e.Element("end-date").Element("year").Value), 
+                                                                                                 e.Element("end-date").Element("month") != null 
+                                                                                                     ? int.Parse(e.Element("end-date").Element("month").Value) 
+                                                                                                     : 1, 1))
+                                                 : null,
+                                   Summary = e.Element("summary") != null ? e.Element("summary").Value : "",
+                                   Company = e.Element("position") != null ? new PositionCompany()
+                                                 {
+                                                     Id = e.Element("position").Element("id").Value,
+                                                     CompanyType = e.Element("position").Element("type")!= null ? e.Element("position").Element("type").Value : "",
+                                                     Industry = e.Element("position").Element("industry") != null ? e.Element("position").Element("industry").Value: "",
+                                                     Name = e.Element("position").Element("name").Value != null ? e.Element("position").Element("name").Value : ""
+                                                 }
+                                                 : null
 
-            return "wicked";
+                               }).ToList();
+        }
+
+        public string parse()
+        {
+            var history =
+                GetWorkHistoryFromResponseStream(
+                    System.IO.File.OpenRead(
+                        System.Web.Hosting.HostingEnvironment.MapPath("~/content/linkedinresponse.xml")));
+
+            return history.Count().ToString();
         }
 
         void auth_request_OnBeforeGetProtectedResource(object sender, PreProtectedResourceRequestEventArgs e)
@@ -93,11 +127,6 @@ namespace Contractors.Web.Controllers
 
         void con_OnReceiveRequestToken(object sender, RequestTokenReceivedEventArgs e)
         {
-            Uri requestTokenUri = new Uri(string.Format("{0}{1}", linkedin_basepath, linkedin_requestToken));
-            Uri accessTokenUri = new Uri(string.Format("{0}{1}", linkedin_basepath, linkedin_accessToken));
-            var con = OAuth.Net.Consumer.OAuthRequest.Create(new EndPoint(requestTokenUri), serviceDefinition,
-                                                             e.RequestToken);
-            
         }
 
 

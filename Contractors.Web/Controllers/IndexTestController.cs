@@ -71,12 +71,15 @@ namespace Contractors.Web.Controllers
             return sb.ToString();
         }
 
-        public ActionResult Search(string q)
+        public ActionResult Search(string q, string[] fields)
         {
             List<SearchResult> results = new List<SearchResult>();
             using (var session = _dbContext.OpenSession() as RavenDbSession)
             {
-                IDocumentQuery<Candidate> query = session.Session.Advanced.LuceneQuery<Candidate>().Where(q);
+                if (fields == null || fields.Length == 0)
+                    fields = DefaultFields.ToArray();
+
+                IDocumentQuery<Candidate> query = CreateQuery<Candidate>(session, "candidateSearch", q, fields);
 
                 
                 foreach (var r in query)
@@ -170,6 +173,11 @@ namespace Contractors.Web.Controllers
             }
             return terms;
         }
+    }
+
+    public class SearchCriteria
+    {
+        public string Skills { get; set; }
     }
 
     public class SearchResult

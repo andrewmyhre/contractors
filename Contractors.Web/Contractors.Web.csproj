@@ -68,7 +68,9 @@
     <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB.1.0.0.427\lib\net40\NLog.dll</HintPath>
     </Reference>
-    <Reference Include="OAuth.Net.Common, Version=0.8.1.1, Culture=neutral, processorArchitecture=MSIL" />
+    <Reference Include="OAuth.Net.Common, Version=0.8.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OAuth.Net-source-0.8.1.1\OAuth.Net.Common.dll</HintPath>
+    </Reference>
     <Reference Include="OAuth.Net.Components">
       <HintPath>..\packages\OAuth.Net-source-0.8.1.1\OAuth.Net.Components.dll</HintPath>
     </Reference>
@@ -149,6 +151,8 @@
     <Compile Include="Controllers\CandidatesController.cs" />
     <Compile Include="Controllers\IndexTestController.cs" />
     <Compile Include="Controllers\LInkedInController.cs" />
+    <Compile Include="Controllers\Position.cs" />
+    <Compile Include="Controllers\PositionCompany.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -159,6 +163,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\linkedinresponse.xml" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
