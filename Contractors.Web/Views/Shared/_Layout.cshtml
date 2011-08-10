@@ -9,6 +9,14 @@
 </head>
 
 <body>
+@if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
+{
+    <div>@Html.ActionLink("Sign out", "SignOut", "Account", new { ReturnUrl = Request.Url.AbsoluteUri }, null)</div>
+}
+else
+{
+    <div>@Html.ActionLink("Sign up or sign in", "SignInOrSignUp", "Account")</div>
+}
     @RenderBody()
 </body>
 </html>

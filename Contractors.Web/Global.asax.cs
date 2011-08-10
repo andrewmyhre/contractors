@@ -47,6 +47,26 @@ namespace Contractors.Web
             RavenDocumentStore.Initialize();
         }
 
+        protected void Application_OnAuthenticateRequest(Object sender, EventArgs e)
+        {
+            if (Context.User != null)
+            {
+                if (Context.User.Identity.IsAuthenticated)
+                {
+                    var user = new WebUser(Context.User.Identity.Name);
+
+                    if (user == null)
+                    {
+                        throw new ApplicationException("Context.User.Identity.Name is not a recognised user.");
+                    }
+
+                    System.Threading.Thread.CurrentPrincipal = Context.User = user;
+                    return;
+                }
+            }
+            System.Threading.Thread.CurrentPrincipal = Context.User = null;
+        }
+
         private IDocumentStore ConfigureRavenDb(IRavenDbConfigurationSection ravenDbConfiguration)
         {
             if (ravenDbConfiguration.StorageType == StorageTypeEnum.Embedded)

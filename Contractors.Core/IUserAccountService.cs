@@ -7,5 +7,6 @@ namespace Contractors.Core
         UserAccount Create(string firstName, string lastName, string emailAddress, string password, string confirmPassword);
         bool CredentialsValid(string emailAddress, string passwordAttempt);
         void UpdateAccount(string firstName, string lastName, string emailAddress);
+        UserAccount Retrieve(string emailAddress);
     }
 }

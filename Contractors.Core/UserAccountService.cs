@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Contractors.Core.Domain;
 
 namespace Contractors.Core
@@ -58,6 +59,14 @@ namespace Contractors.Core
                 account.EmailAddress = emailAddress;
                 session.SaveOrUpdate(account);
                 session.Commit();
+            }
+        }
+
+        public UserAccount Retrieve(string emailAddress)
+        {
+            using (var session = _dbContext.OpenSession())
+            {
+                return session.Query<UserAccount>().Where(a => a.EmailAddress == emailAddress).FirstOrDefault();
             }
         }
     }
