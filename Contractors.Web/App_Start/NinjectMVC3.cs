@@ -51,6 +51,8 @@ namespace Contractors.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IDbContext>().ToMethod(x=>new RavenDbContext(MvcApplication.RavenDocumentStore)).InSingletonScope();
+            kernel.Bind<IAccountCredentialsService>().To<AccountCredentialsService>();
+            kernel.Bind<IUserAccountService>().To<UserAccountService>();
         }        
     }
 }

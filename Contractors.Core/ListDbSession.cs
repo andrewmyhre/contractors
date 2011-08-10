@@ -72,5 +72,10 @@ namespace Contractors.Core
 
             repo.Remove(entity);
         }
+
+        public T Load<T>(string id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

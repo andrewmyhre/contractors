@@ -10,5 +10,6 @@ namespace Contractors.Core
         void SaveOrUpdate<T>(T entity);
         void Commit();
         void Delete<T>(T entity);
+        T Load<T>(string id);
     }
 }
