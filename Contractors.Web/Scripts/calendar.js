@@ -2,38 +2,43 @@
 var dialog = null;
 
 $(document).ready(function () {
-    $('#prev').click(function () {
-        date = addMonths(date, -1);
-        $('#cal').load('/candidates/cal?month=' + (date.getMonth() + 1) + '&year=' + date.getFullYear());
-        showMonth(date.getMonth() + 1, date.getFullYear());
-        return false;
-    });
-    $('#next').click(function () {
-        date = addMonths(date, 1);
-        $('#cal').load('/candidates/cal?month=' + (date.getMonth() + 1) + '&year=' + date.getFullYear());
-        showMonth(date.getMonth() + 1, date.getFullYear());
-        return false;
-    });
-
-
     parseDateFromQueryString(window.location.hash);
 
     dialog = $('<div></div>').dialog({ autoOpen: false, width: 700, resizable: false });
 
     showMonth(date.getMonth() + 1, date.getFullYear());
 
+    setUpYearOptionEditor();
+
     $('#months li a').click(function (event) {
         $('#months li a').removeClass('selected');
         var month =
-            $(event.target).parentsUntil('ul', 'li').index();
+            $(event.target).parentsUntil('ul', 'li').index() - 1; // first LI is the year selector
         showMonth(month + 1, date.getFullYear());
         $(event.target).addClass('selected');
         return false;
     });
 });
 
-function getCountsForYear() {
-    $.get('/candidates/CandidateCountForYear?year=2011',
+function setUpYearOptionEditor() {
+    $('#yearoption').click(function () {
+        var yearForm = $('<form method="get"></form>');
+        var editor = $('<input type="text" name="yearEdit" value="' + $('#yearoption').html() + '" />');
+        yearForm.html(editor);
+        $('#yearoption').html(yearForm);
+        $(editor).select();
+
+        yearForm.submit(function () {
+            var year = $(editor).val();
+            showMonth(date.getMonth() + 1, year);
+            $('#yearoption').html(year);
+            return false;
+        });
+    });
+}
+
+function getCountsForYear(year) {
+    $.get('/candidates/CandidateCountForYear?year='+year,
         function (response) {
             var months = $('#months li a .count');
             for (var i = 0; i < 12; i++)
@@ -62,6 +67,7 @@ function showMonth(month, year) {
     date = new Date(year, month - 1, 1);
     dialog.dialog('close');
     $($('#months li a')[date.getMonth()]).addClass('selected');
+    $('#yearoption').html(year);
     $('#cal').load('/candidates/cal?month='+month+'&year='+year,
         function () {
             $('.candidate-name').mouseenter(function (event) {
@@ -74,24 +80,14 @@ function showMonth(month, year) {
                 dialog.dialog('open');
             });
 
-            getCountsForYear();
+            getCountsForYear(year);
         });
 
     var prevMonth = addMonths(date, -1);
     var nextMonth = addMonths(date, 1);
 
-    $.get('/candidates/candidatecount?month=' + (prevMonth.getMonth() + 1) + '&year=' + prevMonth.getFullYear(),
-        function (response) {
-            $('#prev').html(prevMonth.format('mmmm') + ' (' + response + ')');
-        });
-
-    $.get('/candidates/candidatecount?month=' + (nextMonth.getMonth() + 1) + '&year=' + nextMonth.getFullYear(),
-        function (response) {
-            $('#next').html(nextMonth.format('mmmm') + ' (' + response + ')');
-        });
-
-        window.location.hash = 'month=' + month + '&year=' + year;
-        $('#month-heading').html(date.format('mmmm'));
+    window.location.hash = 'month=' + month + '&year=' + year;
+    $('#month-heading').html(date.format('mmmm'));
 }
 
 function addMonths(date, monthsToAdd) {

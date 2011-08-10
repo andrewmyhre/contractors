@@ -171,7 +171,7 @@ background-color:#FFFFFF;
 }
 #months li a
 {
-padding:1em;
+padding:0em;
 }
 #months li a:hover
 {
@@ -183,3 +183,32 @@ background-color:#CCCCFF;
 }
 
 #months { margin:0; padding:0;}
+
+#months li
+{
+font-size:1.6em;
+}
+
+#months #yearoption form
+{
+display:inline;
+}
+
+#months #yearoption
+{
+    padding:0em;
+}
+
+#months #yearoption input
+{
+font-size:1.2em;
+width:2.2em;
+display:inline;
+}
+
+#months #yearoption:hover
+{
+    padding:0em;
+    background-color:#aaaaFF;
+    cursor:pointer;
+}
