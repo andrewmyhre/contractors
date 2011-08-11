@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Contractors.Core;
 using Contractors.Web.Code;
 using Raven.Client;
 
@@ -55,7 +56,11 @@ namespace Contractors.Web
             {
                 if (Context.User.Identity.IsAuthenticated)
                 {
-                    var user = new WebUser(Context.User.Identity.Name);
+                    var accountService =
+                        Microsoft.Practices.ServiceLocation.ServiceLocator.Current.GetInstance(
+                            typeof (IUserAccountService)) as IUserAccountService;
+
+                    var user = new WebUser(accountService.Retrieve(Context.User.Identity.Name));
 
                     if (user == null)
                     {
