@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<positions total="9">
+    <position>
+        <id>138890742</id>
+        <title>Product Developer</title>
+        <summary>
+            - High traffic website
+            - Technologies/Practices: Agile, TDD, Git, ASP.Net MVC 2/3, Silverlight 4, NUnit, NHibernate, NCover, TeamCity, Selenium, Ninject
+        </summary>
+        <start-date>
+            <year>2010</year>
+            <month>6</month>
+        </start-date>
+        <is-current>true</is-current>
+        <company>
+            <id>59579</id>
+            <name>JustGiving</name>
+            <type>Privately Held</type>
+            <industry>Internet</industry>
+        </company>
+    </position>
+    <position>
+        <id>18613708</id>
+        <title>Lead .Net Developer</title>
+        <summary>
+            Development of web applications while leading a team of developers. Facilitating adoption of new technologies and development practises where beneficial to the agency. Research of emerging computer sciences and new media which are of potential value to customers of the agency.
+
+            Major clients include JTI, Canon, the Department of Work and Income, Kempinski, the Army, Electrolux, The Carbon Trust, EOn, The FA, WhatAFind.
+            http://www.whatafind.com (WhatAFind)
+            http://www.hotitalianmodel.com (Electrolux)
+            http://www.carbon-label.com (The Carbon Trust)
+            Translation Tool (Canon)
+            Create (Canon)
+        </summary>
+        <start-date>
+            <year>2007</year>
+            <month>6</month>
+        </start-date>
+        <end-date>
+            <year>2010</year>
+            <month>9</month>
+        </end-date>
+        <is-current>false</is-current>
+        <company>
+            <id>166332</id>
+            <name>Tequila London</name>
+            <type>Public Company</type>
+            <industry>Marketing and Advertising</industry>
+        </company>
+    </position>
+    <position>
+        <id>111883804</id>
+        <title>Lead .Net Developer</title>
+        <start-date>
+            <year>2007</year>
+        </start-date>
+        <end-date>
+            <year>2010</year>
+        </end-date>
+        <is-current>false</is-current>
+        <company>
+            <name>TEQUILA\</name>
+            <industry>Information Technology and Services</industry>
+        </company>
+    </position>
+    <position>
+        <id>21205469</id>
+        <title>Senior Developer (Contract)</title>
+        <summary>
+            In this contract role I developed the Foster's Laidback Legends promotional website.
+
+            http://fosters.co.uk/laidbacklegends
+        </summary>
+        <start-date>
+            <year>2007</year>
+            <month>5</month>
+        </start-date>
+        <end-date>
+            <year>2007</year>
+            <month>6</month>
+        </end-date>
+        <is-current>false</is-current>
+        <company>
+            <name>Chunk Ideas</name>
+            <size>1-10 employees</size>
+            <type>Privately Held</type>
+            <industry>Marketing and Advertising</industry>
+        </company>
+    </position>
+    <position>
+        <id>15739027</id>
+        <title>Senior Web Developer</title>
+        <summary>
+            Lead developer of a small team developing an enterprise multi-platform web application for Cardinal Security Ltd for several large national retail chains.
+            Employed cutting-edge technologies including:
+            - C# ASP.Net 2.0
+            - SQL 2005
+            - NHibernate, object data persistance technology
+            - ASP.Net AJAX 1.0
+            - Windows Mobile 5.0 and Windows CE (PDA) development
+            - Windows Application Development (C# ASP.Net 2.0)
+            - Remote Windows Application deployment
+            - Web Services architecture
+            - Mobile data feeds to/from PDA devices to a central web server
+            - Agile Development methods
+            Responsibilites:
+            - Architecture of N-Tier web application
+            - Implementation of N-Tier web application including Business Logic Layer, Data Persistance Layer, Web Services
+            - Design and implementation of Windows Mobile 5.0 application, including Web Services consumption, XML-SOAP serialization, binary serialization
+        </summary>
+        <start-date>
+            <year>2006</year>
+            <month>9</month>
+        </start-date>
+        <end-date>
+            <year>2007</year>
+            <month>4</month>
+        </end-date>
+        <is-current>false</is-current>
+        <company>
+            <name>Conscia</name>
+            <size>11-50 employees</size>
+            <type>Privately Held</type>
+            <industry>Information Technology and Services</industry>
+        </company>
+    </position>
+    <position>
+        <id>21205682</id>
+        <title>Senior Developer (Contract)</title>
+        <summary>For Anne Geddes I was initially contracted to redevelop the existing Anne Geddes Baby e-commerce website into the envisioned Freemail.com website. Although the timeframe was extremely tight and workload heavy, the project was completed successfully and on time. After the initial launch I was retained in a semi-permanent role to assist with maintainance and extension of the www.Freemail.com website, as well that of the parent www.AnneGeddes.com, which at the same time was being re-developed in ASP.Net C# with my assistance. A further brand campaign commenced in 2006 where an entirely new website, www.Fast2umail.com, was commissioned to be launched within 2 months. After the success of this second website I departed Anne Geddes to travel South America and pursue the second chapter of my career in the UK.</summary>
+        <start-date>
+            <year>2005</year>
+            <month>7</month>
+        </start-date>
+        <end-date>
+            <year>2006</year>
+            <month>5</month>
+        </end-date>
+        <is-current>false</is-current>
+        <company>
+            <name>Anne Geddes</name>
+            <size>201-500 employees</size>
+            <type>Privately Held</type>
+            <industry>Marketing and Advertising</industry>
+        </company>
+    </position>
+    <position>
+        <id>21205731</id>
+        <title>.Net Developer (Contract)</title>
+        <summary>I was hired by Switched-On Solutions as a contracter to provide consulting and development expertise in supplying local businesses with new-generation technology solutions, primarily Sharepoint Team Services and .Net remoting. Among the clients I assisted were Auckland Savings Bank and Switched-On Solutions itself, by redeveloping internal business logic processes using Sharepoint Team Services along with C#, SOAP and ASP.Net Remoting.</summary>
+        <start-date>
+            <year>2005</year>
+            <month>2</month>
+        </start-date>
+        <end-date>
+            <year>2005</year>
+            <month>4</month>
+        </end-date>
+        <is-current>false</is-current>
+        <company>
+            <name>Switched-On Solutions</name>
+            <size>1-10 employees</size>
+            <type>Privately Held</type>
+            <industry>Internet</industry>
+        </company>
+    </position>
+    <position>
+        <id>21205804</id>
+        <title>Web Developer</title>
+        <summary>Jennifer Ann Web provided me with experience in a company with a marketing focus. I was employed to develop new marketing websites from a brief, and maintain existing websites. For many of the accounts I performed the role of account manager, as was the case with Total Experience, a franchise in the tradition of Red Letter Days. Jennifer Ann Web unexpectedly discontinued trading in January of 2005, at which point I decided to begin my freelance career.</summary>
+        <start-date>
+            <year>2003</year>
+            <month>12</month>
+        </start-date>
+        <end-date>
+            <year>2004</year>
+            <month>12</month>
+        </end-date>
+        <is-current>false</is-current>
+        <company>
+            <name>Jennifer Ann Web</name>
+            <size>1-10 employees</size>
+            <type>Privately Held</type>
+            <industry>Marketing and Advertising</industry>
+        </company>
+    </position>
+    <position>
+        <id>21205882</id>
+        <title>Web Developer</title>
+        <summary>Offered a permanent package by Real Developments in 1999, where I was using Cold Fusion and Access, and later ASP and MS SQL 7. The small-company structure (RD was 3 years old) allowed me to learn a variety of skills very quickly, as I applied myself to email &amp; domain administration, SQL database design, optimisation, index construction, as well as an introduction to OLAP. In 2002 Real Developments was acquired by Lion Nathan/Lion Breweries and re-branded to 'Real'. This led to a wealth of new opportunities from one of New Zealand's strongest commercial companies.</summary>
+        <start-date>
+            <year>1999</year>
+            <month>12</month>
+        </start-date>
+        <end-date>
+            <year>2003</year>
+            <month>12</month>
+        </end-date>
+        <is-current>false</is-current>
+        <company>
+            <id>85127</id>
+            <name>Real Developments</name>
+            <size>11-50 employees</size>
+            <type>Privately Held</type>
+            <industry>Internet</industry>
+        </company>
+    </position>
+</positions>

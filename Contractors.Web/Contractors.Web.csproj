@@ -37,6 +37,9 @@
     <Reference Include="AsyncCtpLibrary, Version=1.0.4107.18181, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB.1.0.0.427\lib\net40\AsyncCtpLibrary.dll</HintPath>
     </Reference>
+    <Reference Include="CommonServiceLocator.NinjectAdapter">
+      <HintPath>..\packages\Ninject.2.2.1.4\extensions\CommonServiceLocator.NinjectAdapter.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.4.1.10331.0\lib\EntityFramework.dll</HintPath>
     </Reference>
@@ -48,6 +51,9 @@
     </Reference>
     <Reference Include="Lucene.Net">
       <HintPath>..\packages\RavenDB-Embedded.1.0.0.427\lib\net40\Lucene.Net.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation">
+      <HintPath>..\packages\CommonServiceLocator\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="Newtonsoft.Json">
@@ -61,6 +67,15 @@
     </Reference>
     <Reference Include="NLog, Version=2.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB.1.0.0.427\lib\net40\NLog.dll</HintPath>
+    </Reference>
+    <Reference Include="OAuth.Net.Common, Version=0.8.1.1, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OAuth.Net-source-0.8.1.1\OAuth.Net.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="OAuth.Net.Components">
+      <HintPath>..\packages\OAuth.Net-source-0.8.1.1\OAuth.Net.Components.dll</HintPath>
+    </Reference>
+    <Reference Include="OAuth.Net.Consumer">
+      <HintPath>..\packages\OAuth.Net-source-0.8.1.1\OAuth.Net.Consumer.dll</HintPath>
     </Reference>
     <Reference Include="Raven.Abstractions, Version=1.0.0.0, Culture=neutral, PublicKeyToken=37f41c7f99471593, processorArchitecture=MSIL">
       <HintPath>..\packages\RavenDB.1.0.0.427\lib\net40\Raven.Abstractions.dll</HintPath>
@@ -131,10 +146,15 @@
   <ItemGroup>
     <Compile Include="App_Start\NinjectMVC3.cs" />
     <Compile Include="Code\CalendarExtensions.cs" />
+    <Compile Include="Code\Indexes.cs" />
     <Compile Include="Code\RavenDbConfigurationSection.cs" />
     <Compile Include="Code\WebUser.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\CandidatesController.cs" />
+    <Compile Include="Controllers\IndexTestController.cs" />
+    <Compile Include="Controllers\LInkedInController.cs" />
+    <Compile Include="Controllers\Position.cs" />
+    <Compile Include="Controllers\PositionCompany.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -146,6 +166,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\linkedinresponse.xml" />
     <Content Include="Content\themes\base\images\ui-bg_flat_0_aaaaaa_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_flat_75_ffffff_40x100.png" />
     <Content Include="Content\themes\base\images\ui-bg_glass_55_fbf9ee_1x400.png" />
@@ -175,6 +196,7 @@
     <Content Include="Content\themes\base\jquery.ui.theme.css" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\advancedsearch.js" />
     <Content Include="Scripts\calendar.js" />
     <Content Include="Scripts\date.format.js" />
     <Content Include="Scripts\jquery-1.5.1-vsdoc.js" />
@@ -215,9 +237,6 @@
     <Folder Include="Content\img\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Contractors.Core\Contractors.Core.csproj">
       <Project>{2CCE6622-3A22-422A-BE19-D34D9592BCEC}</Project>
       <Name>Contractors.Core</Name>
@@ -243,6 +262,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\SignInOrSignUp.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\IndexTest\Advanced.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

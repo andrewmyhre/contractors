@@ -45,6 +45,8 @@ namespace Contractors.Web
             var ravenDbConfiguration = ConfigurationManager.GetSection("ravenDb") as IRavenDbConfigurationSection;
             RavenDocumentStore = ConfigureRavenDb(ravenDbConfiguration);
             RavenDocumentStore.Initialize();
+
+            Indexes.InitialiseIndexes(RavenDocumentStore);
         }
 
         protected void Application_OnAuthenticateRequest(Object sender, EventArgs e)
