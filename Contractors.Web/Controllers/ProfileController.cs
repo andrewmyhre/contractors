@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Security;
 using Contractors.Core;
 using Contractors.Web.Code;
 using Contractors.Web.Controllers;
@@ -69,7 +70,9 @@ namespace Contractors.Web.Controllers
                 }
             }
 
-            _userAccountService.UpdateAccount(request.FirstName, request.LastName, request.EmailAddress);
+            _userAccountService.UpdateAccount(User.Identity.Name, request.FirstName, request.LastName, request.EmailAddress);
+
+            FormsAuthentication.SetAuthCookie(request.EmailAddress, false);
 
             return Json("ok", JsonRequestBehavior.AllowGet);
         }

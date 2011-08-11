@@ -50,14 +50,14 @@ namespace Contractors.Core
             return _accountCredentialsService.ValidatePassword(credentialsId, passwordAttempt);
         }
 
-        public void UpdateAccount(string firstName, string lastName, string emailAddress)
+        public void UpdateAccount(string currentEmailAddress, string firstName, string lastName, string newEmailAddress)
         {
             using (var session = _dbContext.OpenSession())
             {
-                var account = session.Query<UserAccount>().Where(a => a.EmailAddress == emailAddress).FirstOrDefault();
+                var account = session.Query<UserAccount>().Where(a => a.EmailAddress == currentEmailAddress).FirstOrDefault();
                 account.FirstName = firstName;
                 account.LastName = lastName;
-                account.EmailAddress = emailAddress;
+                account.EmailAddress = newEmailAddress;
                 session.SaveOrUpdate(account);
                 session.Commit();
             }

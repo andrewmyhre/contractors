@@ -11,7 +11,7 @@
 <body>
 @if (Request.RequestContext.HttpContext.User.Identity.IsAuthenticated)
 {
-    <div>@Html.ActionLink("Sign out", "SignOut", "Account", new { ReturnUrl = Request.Url.AbsoluteUri }, null)</div>
+    <div>@Html.ActionLink("Your Profile", "Index", "Profile") | @Html.ActionLink("Sign out", "SignOut", "Account", new { ReturnUrl = Request.Url.AbsoluteUri }, null)</div>
 }
 else
 {
