@@ -25,11 +25,23 @@ namespace Contractors.Web.Controllers
 
         public ActionResult SignInOrSignUp()
         {
-            return View();
+            return View(new SignUpRequest());
         }
 
-        public ActionResult SignUp(SignUpRequest request)
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult SignInOrSignUp(SignUpRequest request)
         {
+            var existingAccount = _userAccountService.Retrieve(request.EmailAddress);
+            if (existingAccount != null)
+            {
+                ModelState.AddModelError("EmailAddress", "That email address has already been registered on our system. Do you want to log in?");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View("SignInOrSignUp", request);
+            }
+
             var userAccount = _userAccountService.Create(
                 request.FirstName,
                 request.LastName,

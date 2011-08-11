@@ -1,16 +1,17 @@
-﻿@{
+﻿@model Contractors.Web.Models.SignUpRequest
+@{
     ViewBag.Title = "SignInOrSignUp";
 }
 
 <h2>Sign Up</h2>
 
-@using (Html.BeginForm("SignUp", "Account"))
+@using (Html.BeginForm("SignInOrSignUp", "Account"))
 {
-    <p><label for="firstName">First Name:</label><input type="text" name="firstName" /></p>
-    <p><label for="lastName">Last Name:</label><input type="text" name="lastName" /></p>
-    <p><label for="emailAddress">Email Address:</label><input type="text" name="emailAddress" /></p>
-    <p><label for="password">Password:</label><input type="password" name="password" /></p>
-    <p><label for="confirmPassword">Confirm Password:</label><input type="password" name="confirmPassword" /></p>
+    <p><label for="firstName">First Name:</label><input type="text" name="firstName" value="@Model.FirstName" />@Html.ValidationMessage("firstName")</p>
+    <p><label for="lastName">Last Name:</label><input type="text" name="lastName" value="@Model.LastName" />@Html.ValidationMessage("lastName")</p>
+    <p><label for="emailAddress">Email Address:</label><input type="text" name="emailAddress" value="@Model.EmailAddress" />@Html.ValidationMessage("emailAddress")</p>
+    <p><label for="password">Password:</label><input type="password" name="password" value="@Model.Password" />@Html.ValidationMessage("password")</p>
+    <p><label for="confirmPassword">Confirm Password:</label><input type="password" value="@Model.ConfirmPassword" name="confirmPassword" />@Html.ValidationMessage("confirmPassword")</p>
     <p><input type="submit" value="Create Account" /></p>
 }
 
