@@ -23,13 +23,13 @@ namespace Contractors.Web.Controllers
         //
         // GET: /Account/
 
-        public ActionResult SignInOrSignUp()
+        public ActionResult SignUpOrSignIn()
         {
             return View(new SignUpRequest());
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult SignInOrSignUp(SignUpRequest request)
+        public ActionResult SignUpOrSignIn(SignUpRequest request, string returnUrl)
         {
             var existingAccount = _userAccountService.Retrieve(request.EmailAddress);
             if (existingAccount != null)
@@ -39,7 +39,7 @@ namespace Contractors.Web.Controllers
 
             if (!ModelState.IsValid)
             {
-                return View("SignInOrSignUp", request);
+                return View("SignUpOrSignIn", request);
             }
 
             var userAccount = _userAccountService.Create(
@@ -50,6 +50,9 @@ namespace Contractors.Web.Controllers
                 request.ConfirmPassword);
 
             FormsAuthentication.SetAuthCookie(request.EmailAddress, false);
+
+            if (!string.IsNullOrWhiteSpace(returnUrl))
+                return Redirect(returnUrl);
 
             return RedirectToAction("Index", "Candidates");
         }
@@ -67,7 +70,7 @@ namespace Contractors.Web.Controllers
         }
 
         [AcceptVerbs(HttpVerbs.Post)]
-        public ActionResult SignIn(SignInRequest request)
+        public ActionResult SignIn(SignInRequest request, string returnUrl)
         {
             if (!ModelState.IsValid)
             {
@@ -77,6 +80,9 @@ namespace Contractors.Web.Controllers
             if (_userAccountService.CredentialsValid(request.EmailAddress, request.Password))
             {
                 FormsAuthentication.SetAuthCookie(request.EmailAddress, false);
+
+                if (!string.IsNullOrWhiteSpace(returnUrl))
+                    return Redirect(returnUrl);
 
                 return RedirectToAction("Index", "Candidates");
             }

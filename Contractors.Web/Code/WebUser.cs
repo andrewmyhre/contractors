@@ -38,7 +38,7 @@ namespace Contractors.Web.Code
 
         public string Name
         {
-            get { return string.Format("{0} {1}", _account.FirstName, _account.LastName); }
+            get { return string.Format("{0}", _account.EmailAddress); }
         }
 
         public string AuthenticationType

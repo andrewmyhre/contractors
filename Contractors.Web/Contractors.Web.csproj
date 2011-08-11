@@ -155,13 +155,16 @@
     <Compile Include="Controllers\LInkedInController.cs" />
     <Compile Include="Controllers\Position.cs" />
     <Compile Include="Controllers\PositionCompany.cs" />
+    <Compile Include="Controllers\ProfileController.cs" />
     <Compile Include="Controllers\SetupController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\BasicInformationViewModel.cs" />
     <Compile Include="Models\CandidateDetailsViewModel.cs" />
     <Compile Include="Models\CandidateListViewModel.cs" />
     <Compile Include="Models\LowerCaseRegularExpressionAttribute.cs" />
+    <Compile Include="Models\ProfileIndexViewModel.cs" />
     <Compile Include="Models\RemunerationPeriodExtensions.cs" />
     <Compile Include="Models\SignInRequest.cs" />
     <Compile Include="Models\SignUpRequest.cs" />
@@ -211,6 +214,7 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\modernizr-1.7.js" />
     <Content Include="Scripts\modernizr-1.7.min.js" />
+    <Content Include="Scripts\profile.js" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -263,13 +267,19 @@
     <Content Include="Views\Candidates\Tiny.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Account\SignInOrSignUp.cshtml" />
+    <Content Include="Views\Account\SignUpOrSignIn.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\IndexTest\Advanced.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Account\SignIn.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\Index.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Profile\BasicInformationEdit.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />

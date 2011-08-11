@@ -1,0 +1,11 @@
+﻿@model Contractors.Web.Models.BasicInformationViewModel
+
+<fieldset>
+    <legend>Your Information</legend>
+    
+    <div class="edit-container" id="@Url.Action("UpdateBasicInformation", "Profile")">
+        <div class="display-label">Name: <span class="edit text" id="firstName">@Model.FirstName</span> <span class="edit text" id="lastName">@Model.LastName</span></div>
+        <div class="display-label">Email: <span class="edit text" id="emailAddress">@Model.EmailAddress</email></div>
+    </div>
+</fieldset>
+
