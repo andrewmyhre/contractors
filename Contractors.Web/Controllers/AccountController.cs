@@ -61,16 +61,29 @@ namespace Contractors.Web.Controllers
             return RedirectToAction("Index", "Candidates");
         }
 
-        public ActionResult SignIn(string emailAddress, string password, string returnUrl)
+        public ActionResult SignIn()
         {
-            if (_userAccountService.CredentialsValid(emailAddress, password))
+            return View(new SignInRequest());
+        }
+
+        [AcceptVerbs(HttpVerbs.Post)]
+        public ActionResult SignIn(SignInRequest request)
+        {
+            if (!ModelState.IsValid)
             {
-                FormsAuthentication.SetAuthCookie(emailAddress, false);
+                return View(request);
+            }
+
+            if (_userAccountService.CredentialsValid(request.EmailAddress, request.Password))
+            {
+                FormsAuthentication.SetAuthCookie(request.EmailAddress, false);
 
                 return RedirectToAction("Index", "Candidates");
             }
 
-            return Redirect(Request.UrlReferrer.AbsoluteUri);
+            ModelState.AddModelError("EmailAddress", "An account with that email address or password could not be found");
+
+            return View(request);
         }
     }
 }

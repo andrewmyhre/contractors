@@ -43,6 +43,7 @@ namespace Contractors.Core
             using (var session = _dbContext.OpenSession())
             {
                 var account = session.Query<UserAccount>().Where(a => a.EmailAddress == emailAddress).FirstOrDefault();
+                if (account == null) return false;
                 credentialsId = account.CredentialsId;
             }
 

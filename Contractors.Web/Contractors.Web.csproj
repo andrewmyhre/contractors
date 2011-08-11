@@ -163,6 +163,7 @@
     <Compile Include="Models\CandidateListViewModel.cs" />
     <Compile Include="Models\LowerCaseRegularExpressionAttribute.cs" />
     <Compile Include="Models\RemunerationPeriodExtensions.cs" />
+    <Compile Include="Models\SignInRequest.cs" />
     <Compile Include="Models\SignUpRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -266,6 +267,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\IndexTest\Advanced.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Account\SignIn.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
