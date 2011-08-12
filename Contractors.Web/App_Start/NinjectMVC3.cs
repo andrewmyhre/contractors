@@ -1,4 +1,10 @@
+using CommonServiceLocator.NinjectAdapter;
 using Contractors.Core;
+using Contractors.Web.Controllers;
+using Microsoft.Practices.ServiceLocation;
+using OAuth.Net.Common;
+using OAuth.Net.Consumer;
+using OAuth.Net.Consumer.Components;
 using Raven.Client;
 
 [assembly: WebActivator.PreApplicationStartMethod(typeof(Contractors.Web.App_Start.NinjectMVC3), "Start")]
@@ -41,6 +47,11 @@ namespace Contractors.Web.App_Start
         {
             var kernel = new StandardKernel();
             RegisterServices(kernel);
+
+            var locator = new NinjectServiceLocator(kernel);
+
+            ServiceLocator.SetLocatorProvider(() => locator);
+
             return kernel;
         }
 
@@ -51,6 +62,12 @@ namespace Contractors.Web.App_Start
         private static void RegisterServices(IKernel kernel)
         {
             kernel.Bind<IDbContext>().ToMethod(x=>new RavenDbContext(MvcApplication.RavenDocumentStore)).InSingletonScope();
+            kernel.Bind<IAccountCredentialsService>().To<AccountCredentialsService>();
+            kernel.Bind<IUserAccountService>().To<UserAccountService>();
+            kernel.Bind<INonceProvider>().To<OAuth.Net.Components.GuidNonceProvider>();
+            kernel.Bind<ISigningProvider>().To<OAuth.Net.Components.HmacSha1SigningProvider>().Named("signing.provider:HMAC-SHA1");
+            kernel.Bind<IRequestStateStore>().To<SessionRequestStateStore>();
+            
         }        
     }
 }

@@ -4,15 +4,28 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Candidates</h2>
+<h2>Candidate Calendar</h2>
 
 <link rel="stylesheet" type="text/css" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/themes/base/jquery-ui.css"> 
 <script type="text/javascript" src="/scripts/date.format.js"></script>
 <script type="text/javascript" src="/scripts/jquery-ui-1.8.11.min.js"></script>
 <script type="text/javascript" src="/scripts/calendar.js"></script>
 
-<div>
-<p><a href="" id="prev">prev</a> <a href="" id="next">next</a>
-</div>
+<ul id="months">
+    <li><span id="yearoption">@DateTime.Now.Year</span></li>
+    <li><a href="#">January <span class="count" /></a></li>
+    <li><a href="#">February <span class="count" /></a></li>
+    <li><a href="#">March <span class="count" /></a></li>
+    <li><a href="#">April <span class="count" /></a></li>
+    <li><a href="#">May <span class="count" /></a></li>
+    <li><a href="#">June <span class="count" /></a></li>
+    <li><a href="#">July <span class="count" /></a></li>
+    <li><a href="#">August <span class="count" /></a></li>
+    <li><a href="#">September <span class="count" /></a></li>
+    <li><a href="#">October <span class="count" /></a></li>
+    <li><a href="#">November <span class="count" /></a></li>
+    <li><a href="#">December <span class="count" /></a></li>
+</ul>
+<h2 id="month-heading"></h2>
 
 <div id="cal"></div>

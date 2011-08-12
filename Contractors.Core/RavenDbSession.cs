@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Raven.Client;
 
 namespace Contractors.Core
@@ -37,6 +38,11 @@ namespace Contractors.Core
         public void Delete<T>(T entity)
         {
             _dbSession.Delete(entity);
+        }
+
+        public T Load<T>(string id)
+        {
+            return _dbSession.Load<T>(id);
         }
     }
 }

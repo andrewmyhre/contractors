@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+using Contractors.Core;
 using Contractors.Web.Code;
 using Raven.Client;
 
@@ -47,6 +48,30 @@ namespace Contractors.Web
             RavenDocumentStore.Initialize();
 
             Indexes.InitialiseIndexes(RavenDocumentStore);
+        }
+
+        protected void Application_OnAuthenticateRequest(Object sender, EventArgs e)
+        {
+            if (Context.User != null)
+            {
+                if (Context.User.Identity.IsAuthenticated)
+                {
+                    var accountService =
+                        Microsoft.Practices.ServiceLocation.ServiceLocator.Current.GetInstance(
+                            typeof (IUserAccountService)) as IUserAccountService;
+
+                    var user = new WebUser(accountService.Retrieve(Context.User.Identity.Name));
+
+                    if (user == null)
+                    {
+                        throw new ApplicationException("Context.User.Identity.Name is not a recognised user.");
+                    }
+
+                    System.Threading.Thread.CurrentPrincipal = Context.User = user;
+                    return;
+                }
+            }
+            System.Threading.Thread.CurrentPrincipal = Context.User = null;
         }
 
         private IDocumentStore ConfigureRavenDb(IRavenDbConfigurationSection ravenDbConfiguration)

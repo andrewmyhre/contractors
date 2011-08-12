@@ -1,9 +1,41 @@
 ﻿@model Contractors.Web.Models.CandidateDetailsViewModel
+@using Contractors.Web.Models
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<h2>@Model.Candidate.FullName</h2>
 
-@Html.DisplayFor(m=>m.Candidate)
+<div>
+    <img src="http://www.gravatar.com/avatar/@Model.Candidate.EmailMd5Hash?r=g&s=200&d=http://@Request.Url.Authority/content/img/nerd.jpg" class="avatar" />
+    <p><strong>@Model.Candidate.JobTitle</strong> at @Model.Candidate.MostRecentRole.CompanyName</p>
+    <p>@Model.Candidate.MostRecentRole.Remuneration.ToString("c") @Model.Candidate.MostRecentRole.RemunerationPeriod.ToPeriodString()</p>
+    <p>@Model.Candidate.TotalExperienceInYears.ToString("0.0") years experience in
+    @string.Join(", ", Model.Candidate.Skills.Select(s=>s.SkillName).Distinct())</p>
+    <p>@string.Join(", ", Model.Candidate.WorkHistory.Select(p => p.Sector).Distinct())</p>
+    <h3>Skills</h3>
+    @foreach(var skill in Model.Candidate.Skills.OrderByDescending(s=>s.Level))
+    {
+        <p><strong>@skill.SkillName </strong>
+        @{
+        var experience = @Model.Candidate.WorkHistory.Where(p => p.Skills.Any(s => s.SkillName == skill.SkillName));
+        }
+        @skill.Level, 
+        @experience.Sum(p=>p.DurationInYears).ToString("0.0") years
+        <text>(@experience.Count() companies)</text>
+        </p>
+    }
+    <h3>Full History</h3>
+    @foreach(var placement in Model.Candidate.WorkHistory.OrderBy(p=>p.Started))
+    {
+        <p><strong>@placement.CompanyName</strong><br/>
+        @placement.Started.ToString("MMM yyyy") - @(placement.StillThere ? "Now" : placement.Finished.ToString("MMM yyyy")) <br/>
+        @placement.Sector<br/>
+        @placement.Remuneration @placement.RemunerationPeriod.ToPeriodString()
+        @string.Join(", ", placement.Skills.Select(s=>s.SkillName))
+        </p>
+    }
+
+</div>
+

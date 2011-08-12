@@ -53,6 +53,10 @@ namespace Contractors.Web.Controllers
             int id = random.Next(1, 1000);
             //string photo = RandomNerdImage();
             var workHistory = RandomWorkHistory();
+            List<Skill> skills = new List<Skill>();
+            foreach (var placement in workHistory)
+                skills.AddRange(placement.Skills);
+
             string firstName = FirstNames[random.Next(FirstNames.Length)];
             string surname = Surnames[random.Next(Surnames.Length)];
             string companyName = workHistory[workHistory.Count - 1].CompanyName;
@@ -73,7 +77,7 @@ namespace Contractors.Web.Controllers
                            EmailMd5Hash = MD5(email.Trim().ToLower()),
                            JobTitle = RandomJobTitle(),
                            WorkHistory = workHistory,
-                           Skills = RandomSkillSet(),
+                           Skills = skills,
                            ContractLengthInMonths=random.Next(12)
                        };
 
@@ -103,16 +107,16 @@ namespace Contractors.Web.Controllers
             }
         }
 
-        private List<Skill> RandomSkillSet()
+        private List<Skill> RandomSkillSet(int maxNumber)
         {
             List<Skill> skills = new List<Skill>();
-            int skillCount = random.Next(2, 10);
+            int skillCount = random.Next(2, maxNumber);
             for (int i = 0; i < skillCount; i++)
             {
                 skills.Add(new Skill()
                                {
                                    ExperienceInYears = random.Next(1, 5),
-                                   SkillName = "some skill",
+                                   SkillName = sampleSkills[random.Next(sampleSkills.Length)],
                                    Level = (SkillLevel)random.Next(Enum.GetValues(typeof(SkillLevel)).Length - 1)
                                });
             }
@@ -126,24 +130,25 @@ namespace Contractors.Web.Controllers
 
             RemunerationPeriod payType = (RemunerationPeriod)random.Next(Enum.GetValues(typeof(RemunerationPeriod)).Length - 1);
             decimal remuneration = 0;
-            switch (payType)
-            {
-                case RemunerationPeriod.PerDay:
-                    remuneration = random.Next(150, 800);
-                    break;
-                case RemunerationPeriod.PerWeek:
-                    remuneration = random.Next(600, 2500);
-                    break;
-                case RemunerationPeriod.PerMonth:
-                    remuneration = random.Next(2000, 5000);
-                    break;
-                case RemunerationPeriod.PerYear:
-                    remuneration = random.Next(25000, 120000);
-                    break;
-            }
 
             while (started <= DateTime.Now)
             {
+                switch (payType)
+                {
+                    case RemunerationPeriod.PerDay:
+                        remuneration = random.Next(150, 800);
+                        break;
+                    case RemunerationPeriod.PerWeek:
+                        remuneration = random.Next(600, 2500);
+                        break;
+                    case RemunerationPeriod.PerMonth:
+                        remuneration = random.Next(2000, 5000);
+                        break;
+                    case RemunerationPeriod.PerYear:
+                        remuneration = random.Next(25000, 120000);
+                        break;
+                }
+
                 int durationInMonths = random.Next(3, 48);
                 DateTime finished = started.AddMonths(durationInMonths).AddDays(random.Next(30));
                 history.Add(new Placement()
@@ -156,7 +161,7 @@ namespace Contractors.Web.Controllers
                                     Sector = (CompanySector)random.Next(Enum.GetValues(typeof(CompanySector)).Length - 1),
                                     Startup = random.Next(3) == 0,
                                     StillThere = finished >= DateTime.Now,
-
+                                    Skills = RandomSkillSet(5)
                                 });
                 started = started.AddMonths(durationInMonths);
             }
@@ -378,6 +383,39 @@ namespace Contractors.Web.Controllers
 "C++ Developer"};
 
 
-        private static string[] Surnames = new string[] { "Smith", "Jones", "Williams", "Brown", "Taylor", "Davies", "Evans", "Thomas", "Roberts", "Johnson", "Wilson", "White", "Wright", "Robinson", "Green", "Hall", "Walker", "Lewis", "Edwards", "Hughes", "Turner", "Jackson", "Harris", "Cooper", "Morris", "Martin", "Hill", "Baker", "Moore", "Clark", "King", "Ward", "Morgan", "Phillips", "Allen", "James", "Lee", "Scott", "Watson", "Bennett", "Griffiths", "Price", "Bailey", "Parker", "Young", "Richardson", "Carter", "Cook" };
+        private static string[] Surnames = new string[] { "Smith", "Jones", "Williams", "Brown", "Taylor", "Davies", "Evans", "Thomas", "Roberts", "Johnson", "Wilson", "White", "Wright", "Robinson", "Green", "Hall", "Walker", "Lewis", "Edwards", "Hughes", "Turner", "Jackson", "Harris", "Cooper", "Morris", "Martin", "Hill", "Baker", "Moore", "Clark", "King",
+ "Ward", "Morgan", "Phillips", "Allen", "James", "Lee", "Scott", "Watson", "Bennett", "Griffiths", "Price", "Bailey", "Parker", "Young", "Richardson", "Carter", "Cook" };
+
+        private static string[] sampleSkills = new string[]
+            {
+                "ASP.Net",
+                "ASP.Net MVC",
+                "Silverlight",
+                "Silverlight 2",
+                "Silverlight 3",
+                "MVVM",
+                "Flash 9",
+                "Flash 10",
+                "PHP",
+                "PHP 2",
+                "PHP 3",
+                "MS SQL",
+                "MySQL",
+                "MS SQL 2008",
+                "MS SQL 2005",
+                "Lucene.Net",
+                "RavenDb",
+                "NoSQL",
+                "CouchDb",
+                "Windows Mobile 6",
+                "Windows Mobile 7",
+                "VB.Net",
+                "Visual Basic",
+                "ASP"
+
+            };
+
+
     }
+
 }

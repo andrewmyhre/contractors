@@ -21,11 +21,14 @@ namespace Contractors.Web.Code
                         {
                             Map = @"from c in docs.Candidates 
 from skill in Hierarchy(c, ""Skills"")
-select new {skill.SkillName, c.FullName}",
+from placement in Hierarchy(c, ""WorkHistory"")
+select new {skill.SkillName, c.FullName, placement.CompanyName, placement.Sector}",
                             Analyzers =
                                 {
-                                    {"FullName", typeof(SimpleAnalyzer).FullName},
-                                    {"SkillName", typeof(SimpleAnalyzer).FullName}
+                                    {"FullName", typeof(StopAnalyzer).FullName},
+                                    {"SkillName", typeof(StopAnalyzer).FullName},
+                                    {"CompanyName", typeof(StopAnalyzer).FullName},
+                                    {"Sector", typeof(StopAnalyzer).FullName}
                                 }
                         });
             }
