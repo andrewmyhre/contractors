@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contractors.Core", "Contrac
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Contractors.Core.Test.Unit", "Contractors.Core.Test.Unit\Contractors.Core.Test.Unit.csproj", "{97A23F2F-85A7-4320-925A-B92AB0AF54DE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EmailProcessing", "EmailProcessing", "{F04D07E8-EE7C-486D-B29D-DA95C7008CF1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmailProcessing", "EmailProcessing\EmailProcessing\EmailProcessing.csproj", "{F511818D-59DF-4358-8946-10FB3933E5B2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,8 +29,15 @@ Global
 		{97A23F2F-85A7-4320-925A-B92AB0AF54DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{97A23F2F-85A7-4320-925A-B92AB0AF54DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{97A23F2F-85A7-4320-925A-B92AB0AF54DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F511818D-59DF-4358-8946-10FB3933E5B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F511818D-59DF-4358-8946-10FB3933E5B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F511818D-59DF-4358-8946-10FB3933E5B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F511818D-59DF-4358-8946-10FB3933E5B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F511818D-59DF-4358-8946-10FB3933E5B2} = {F04D07E8-EE7C-486D-B29D-DA95C7008CF1}
 	EndGlobalSection
 EndGlobal
