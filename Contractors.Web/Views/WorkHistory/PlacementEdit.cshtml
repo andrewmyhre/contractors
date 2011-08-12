@@ -1,0 +1,23 @@
+﻿@model Contractors.Core.Domain.Placement
+
+
+ @using (Html.BeginForm("UpdatePlacement", "WorkHistory", new { id = Model.Id }, FormMethod.Post, new {@class="update-placement"}))
+ {
+        <fieldset>
+            <legend>Add a placement to your work history</legend>
+            <div><label for="companyName">Company Name:</label><input type="text" name="companyName" value="@Model.CompanyName" />@Html.ValidationMessage("CompanyName")</div>
+            <div><label for="sector">Sector:</label><input type="text" name="sector" value="@Model.Sector" />@Html.ValidationMessage("Sector")</div>
+            <div><label for="started">When did you start?</label><input type="text" name="started" value="@Model.Started" />@Html.ValidationMessage("Started")</div>
+            <div><label for="stillThere">Still There?</label><input type="checkbox" name="stillThere" id="stillThere" value="true" @(Model.StillThere ? "checked=\"checked\"" : "") /><label for="finished">When did you finish?</label><input type="text" name="finished" />@Html.ValidationMessage("Finished")</div>
+            <div><label for="placementType">Type of role:</label><select name="placementType" id="placementType">
+                <option value="Permanent" @(Model.PlacementType == Contractors.Core.Domain.PlacementType.Permanent ? "selected=\"selected\"" : "")>Permanent</option>
+                <option value="Contract" @(Model.PlacementType == Contractors.Core.Domain.PlacementType.Contract ? "selected=\"selected\"" : "")>Contract</option>
+                <option value="Internship" @(Model.PlacementType == Contractors.Core.Domain.PlacementType.Internship ? "selected=\"selected\"" : "")>Internship</option>
+            </select>@Html.ValidationMessage("PlacementType")</div>
+            <div><label for="skillSet">Skills:</label><input type="text" name="skillSet" value="@string.Join(", ", Model.Skills.Select(s => s.SkillName).ToArray())" /></div>
+            @Html.Hidden("id", Model.Id)
+            <div><input type="submit" value="Save Placement Details" /></div>
+            <div>@Html.ActionLink("Delete this placement", "DeletePlacement", "WorkHistory", new {id=Model.Id}, new {@class="delete-placement"})</div>
+        </fieldset>
+ }
+

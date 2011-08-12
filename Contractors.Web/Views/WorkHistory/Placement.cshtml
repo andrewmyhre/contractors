@@ -1,0 +1,5 @@
+﻿@model Contractors.Core.Domain.Placement
+
+<h3>@Model.CompanyName <a class="edit" id="@Model.Id" href="#edit-@Model.Id">Edit</a></h3>
+<p>@Model.Started.ToString("MM/yyyy") - @(Model.StillThere ? "Present" : Model.Finished.ToString("MM/yyyy"))<br />
+@string.Join(", ", Model.Skills.Select(s=>s.SkillName).ToArray())</p>

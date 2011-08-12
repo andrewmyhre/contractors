@@ -61,16 +61,25 @@ namespace Contractors.Web.App_Start
         /// <param name="kernel">The kernel.</param>
         private static void RegisterServices(IKernel kernel)
         {
+            kernel.Bind<Raven.Client.IDocumentSession>().ToMethod(r => MvcApplication.RavenDocumentStore.OpenSession()).InRequestScope().OnDeactivation(
+                delegate(IDocumentSession session) { session.SaveChanges();session.Dispose(); });
             kernel.Bind<IDbContext>().ToMethod(x=>new RavenDbContext(MvcApplication.RavenDocumentStore)).InSingletonScope();
-<<<<<<< HEAD
+<<<<<<< Updated upstream
+=======
+            kernel.Bind<IDbSession>().ToMethod(x => new RavenDbSession(kernel.Get<IDocumentSession>())).InRequestScope();
+
+>>>>>>> Stashed changes
             kernel.Bind<IAccountCredentialsService>().To<AccountCredentialsService>();
             kernel.Bind<IUserAccountService>().To<UserAccountService>();
-=======
             kernel.Bind<INonceProvider>().To<OAuth.Net.Components.GuidNonceProvider>();
             kernel.Bind<ISigningProvider>().To<OAuth.Net.Components.HmacSha1SigningProvider>().Named("signing.provider:HMAC-SHA1");
             kernel.Bind<IRequestStateStore>().To<SessionRequestStateStore>();
+<<<<<<< Updated upstream
             
->>>>>>> linkedin
+=======
+            /*kernel.Bind<System.Web.HttpContextBase>().ToMethod(
+                r => new System.Web.HttpContextWrapper(System.Web.HttpContext.Current));*/
+>>>>>>> Stashed changes
         }        
     }
 }

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -97,21 +96,5 @@ namespace Contractors.Web.Controllers
     {
         public string Key { get; set; }
         public string[] Messages { get; set; }
-    }
-}
-
-namespace Contractors.Web.Code
-{
-    public static class RequestExtensions
-    {
-        public static ErrorsResponse ToResponse(this ModelStateDictionary modelState)
-        {
-            ErrorsResponse response = new ErrorsResponse();
-            foreach(var key in modelState.Keys)
-            {
-                response.Errors.Add(new ErrorInformation(){Key=key, Messages = modelState[key].Errors.Select(e=>e.ErrorMessage).ToArray()});
-            }
-            return response;
-        }
     }
 }

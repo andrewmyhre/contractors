@@ -50,5 +50,6 @@ namespace Contractors.Web.Code
         {
             get { return _account != null; }
         }
+        public UserAccount UserAccount { get { return _account; } }
     }
 }

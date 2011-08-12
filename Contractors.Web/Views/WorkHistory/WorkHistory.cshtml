@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Contractors.Core.Domain.Placement>
+           
+@foreach (var placement in Model)
+{
+    <div class="placement" id="@placement.Id">
+    @{Html.RenderPartial("Placement", placement);}
+    </div>
+}

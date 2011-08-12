@@ -24,6 +24,7 @@ namespace Contractors.Core.Domain
         {
             get
             {
+                if (WorkHistory == null || WorkHistory.Count == 0) return DateTime.Now;
                 return WorkHistory
                     .Max(h => h.Started)
                     .AddMonths(ContractLengthInMonths);
@@ -32,12 +33,17 @@ namespace Contractors.Core.Domain
 
         public Placement MostRecentRole
         {
-            get { return WorkHistory.OrderByDescending(p => p.Started).FirstOrDefault(); }
+            get
+            {
+                if (WorkHistory == null || WorkHistory.Count == 0) return null;
+                return WorkHistory.OrderByDescending(p => p.Started).FirstOrDefault();
+            }
         }
         public double TotalExperienceInYears
         {
             get
             {
+                if (WorkHistory == null || WorkHistory.Count == 0) return 0;
                 return (MostRecentRole.StillThere ? DateTime.Now : MostRecentRole.Finished)
                            .Subtract(WorkHistory.Min(p=>p.Started))
                            .TotalDays/365;
